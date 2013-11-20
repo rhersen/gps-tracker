@@ -17,7 +17,7 @@ class window.CanvasContext
     @ctx.clearRect(0, 0, @canvas.width, @canvas.height)
 
   handleResize: ->
-    margin = 5
+    margin = 1
     px = margin + "px"
     @canvas = document.getElementById 'fg'
     @canvas.style.marginLeft = px

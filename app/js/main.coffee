@@ -1,9 +1,9 @@
-window.getCanvasCoordinate = (x, width)->
-  width / 2 + (width / 2 - 10) * x
+window.getCanvasCoordinate = (userCoordinate, max)->
+  max / 2 + (max / 2 - 10) * userCoordinate
 
 window.animationFrame = (cc, millis) ->
   cc.clear()
-  cc.draw Math.sin(millis / 4000), Math.sin(millis / 5000)
+  cc.draw Math.sin(millis / 2800), Math.sin(millis / 2000)
 
 window.init = ->
   executeAnimationFrame = (millis) ->
