@@ -8,7 +8,7 @@ class window.CanvasContext
     @ctx.arc(
       getCanvasX(x, @canvas.width),
       getCanvasY(y, @canvas.height),
-      10, 0, 2 * Math.PI, false
+      2, 0, 2 * Math.PI, false
     )
     @ctx.fillStyle = "rgba(255,0,255,0.7)"
     @ctx.fill()

@@ -4,27 +4,33 @@ window.getCanvasX = (userCoordinate, max)->
 window.getCanvasY = (userCoordinate, max)->
   (3637.74 - 61.451484 * userCoordinate) * max
 
-window.animationFrame = (cc, millis) ->
+points = []
+
+window.animationFrame = (cc, points, millis) ->
   cc.clear()
-  cc.draw 17.901875, 59.1931
-  cc.draw 17.901592, 59.192834
-  cc.draw 17.895976, 59.187787
-  cc.draw 17.886151, 59.183288
-  cc.draw 17.874124, 59.185354
-  cc.draw 17.879905, 59.190334
-  cc.draw 17.88877, 59.187458
-  cc.draw 17.897629, 59.189351
-  cc.draw 17.901763, 59.193056
+  for point in points
+    cc.draw point.longitude, point.latitude
 
 window.init = ->
   executeAnimationFrame = (millis) ->
-    animationFrame(cc, millis)
+    animationFrame(cc, points, millis)
     requestAnimationFrame executeAnimationFrame
+
+  handleGpx = (gpx) ->
+    addPoint = ->
+      trkpt = jQuery(this)
+      points.push({
+        latitude: trkpt.attr('lat')
+        longitude: trkpt.attr('lon')
+      })
+
+    jQuery(gpx).find('trkpt').each addPoint
+
   if document.getElementById 'fg'
     cc = new CanvasContext
     cc.handleResize()
     window.onresize = cc.handleResize
-    cc.draw 0, 0
+    jQuery.get 'gpx.xml', handleGpx
     requestAnimationFrame executeAnimationFrame
 
 addEventListener('DOMContentLoaded', init, false)

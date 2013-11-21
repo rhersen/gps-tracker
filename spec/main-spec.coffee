@@ -13,12 +13,12 @@ describe "main", ->
 
     it "clears screen", ->
       spyOn(context, 'clear')
-      animationFrame(context)
+      animationFrame(context, [])
       expect(context.clear).toHaveBeenCalled()
 
     it "draws", ->
       spyOn(context, 'draw')
-      animationFrame(context)
+      animationFrame(context, [{longitude: 17, latitude: 54}])
       expect(context.draw).toHaveBeenCalled()
 
   describe "#getCanvasX #getCanvasY", ->
