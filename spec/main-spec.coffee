@@ -21,11 +21,11 @@ describe "main", ->
       animationFrame(context)
       expect(context.draw).toHaveBeenCalled()
 
-  describe "#getCanvasCoordinate", ->
-    it "maps zero to middle", ->
-      result = getCanvasCoordinate(0, 100)
-      expect(result).toBe(50)
+  describe "#getCanvasX #getCanvasY", ->
+    it "maps top left", ->
+      expect(getCanvasX(17.862772, 1000)).toBeCloseTo(0, 0)
+      expect(getCanvasY(59.196944, 1000)).toBeCloseTo(0, 0)
 
-    it "maps minus one to margin", ->
-      result = getCanvasCoordinate(-1, 100)
-      expect(result).toBe(10)
+    it "maps bottom right", ->
+      expect(getCanvasX(17.911862, 1000)).toBeCloseTo(1000, 0)
+      expect(getCanvasY(59.180671, 1000)).toBeCloseTo(1000, 0)

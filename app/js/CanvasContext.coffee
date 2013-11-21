@@ -6,8 +6,8 @@ class window.CanvasContext
   draw: (x, y) ->
     @ctx.beginPath()
     @ctx.arc(
-      getCanvasCoordinate(x, @canvas.width),
-      getCanvasCoordinate(y, @canvas.height),
+      getCanvasX(x, @canvas.width),
+      getCanvasY(y, @canvas.height),
       10, 0, 2 * Math.PI, false
     )
     @ctx.fillStyle = "rgba(255,0,255,0.7)"
