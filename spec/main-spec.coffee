@@ -16,10 +16,23 @@ describe "main", ->
       animationFrame(context, [])
       expect(context.clear).toHaveBeenCalled()
 
-    it "draws", ->
-      spyOn(context, 'draw')
-      animationFrame(context, [{longitude: 17, latitude: 54}])
-      expect(context.draw).toHaveBeenCalled()
+    describe "draws", ->
+      points = [
+        {longitude: 1, latitude: 54},
+        {longitude: 2, latitude: 54},
+        {longitude: 3, latitude: 54}
+      ]
+
+      it "the first point", ->
+        spyOn(context, 'draw')
+        animationFrame(context, points, 0)
+        expect(context.draw).toHaveBeenCalledWith(1, 54)
+
+      it "but not the second point", ->
+        spyOn(context, 'draw')
+        animationFrame(context, points, 0)
+        expect(context.draw).toHaveBeenCalledWith(1, 54)
+        expect(context.draw).not.toHaveBeenCalledWith(2, 54)
 
   describe "#getCanvasX #getCanvasY", ->
     it "maps top left", ->

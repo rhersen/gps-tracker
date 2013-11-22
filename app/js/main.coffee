@@ -8,7 +8,8 @@ points = []
 
 window.animationFrame = (cc, points, millis) ->
   cc.clear()
-  for point in points
+  point = points[Math.round(millis / 8) % points.length]
+  if point
     cc.draw point.longitude, point.latitude
 
 window.init = ->
