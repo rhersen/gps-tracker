@@ -26,13 +26,13 @@ describe "main", ->
       it "the first point", ->
         spyOn(context, 'draw')
         animationFrame(context, points, 0)
-        expect(context.draw).toHaveBeenCalledWith(1, 54)
+        expect(context.draw).toHaveBeenCalledWith(1, 54, 1.0)
 
-      it "but not the second point", ->
+      it "the second point and the first with lower alpha", ->
         spyOn(context, 'draw')
-        animationFrame(context, points, 0)
-        expect(context.draw).toHaveBeenCalledWith(1, 54)
-        expect(context.draw).not.toHaveBeenCalledWith(2, 54)
+        animationFrame(context, points, 1)
+        expect(context.draw).toHaveBeenCalledWith(2, 54, 1.0)
+        expect(context.draw).toHaveBeenCalledWith(1, 54, 0.99)
 
   describe "#getCanvasX #getCanvasY", ->
     it "maps top left", ->

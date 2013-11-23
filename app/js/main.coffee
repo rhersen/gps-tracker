@@ -6,15 +6,20 @@ window.getCanvasY = (userCoordinate, max)->
 
 points = []
 
-window.animationFrame = (cc, points, millis) ->
+getIndex = (millis) ->
+  Math.round(millis / 32) % points.length
+
+draw = (cc, point, alpha)->
+  cc.draw point.longitude, point.latitude, alpha
+
+window.animationFrame = (cc, points, head) ->
   cc.clear()
-  point = points[Math.round(millis / 8) % points.length]
-  if point
-    cc.draw point.longitude, point.latitude
+  tail = head - 100
+  draw cc, point, (i - tail) / 100 for point, i in points when tail < i <= head
 
 window.init = ->
   executeAnimationFrame = (millis) ->
-    animationFrame(cc, points, millis)
+    animationFrame(cc, points, getIndex(millis))
     requestAnimationFrame executeAnimationFrame
 
   handleGpx = (gpx) ->

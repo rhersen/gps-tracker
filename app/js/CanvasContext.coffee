@@ -3,14 +3,15 @@ class window.CanvasContext
     @canvas = document.getElementById 'fg'
     @ctx = @canvas.getContext '2d'
 
-  draw: (x, y) ->
+  draw: (x, y, alpha) ->
+    alpha = alpha || 1.0
     @ctx.beginPath()
     @ctx.arc(
       getCanvasX(x, @canvas.width),
       getCanvasY(y, @canvas.height),
       4, 0, 2 * Math.PI, false
     )
-    @ctx.fillStyle = "rgba(255,0,255,0.7)"
+    @ctx.fillStyle = "rgba(255,0,255,#{ alpha })"
     @ctx.fill()
 
   clear: ->
