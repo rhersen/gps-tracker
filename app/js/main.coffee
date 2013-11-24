@@ -6,7 +6,7 @@ window.getCanvasY = (userCoordinate, max)->
 
 points = []
 
-getIndex = (millis) ->
+getIndex = (points, millis) ->
   Math.round(millis / 32) % points.length
 
 draw = (cc, point, alpha)->
@@ -15,24 +15,28 @@ draw = (cc, point, alpha)->
 drawFlag = (cc, point)->
   cc.drawFlag point.longitude, point.latitude
 
-window.animationFrame = (cc, points, head) ->
-  cc.clear()
+window.drawCompetitor = (cc, points, head) ->
   tail = head - 100
-  draw cc, point, (i - tail) / 100 for point, i in points when tail < i <= head
+  draw cc, point, (i - tail) / 100 for point, i in points when tail < i < head
   drawFlag cc, points[head] if head < points.length
+
+window.animationFrame = (cc, points, millis) ->
+  cc.clear()
+  head = getIndex(points, millis)
+  drawCompetitor(cc, points, head)
 
 window.init = ->
   executeAnimationFrame = (millis) ->
-    animationFrame(cc, points, getIndex(millis))
+    animationFrame(cc, points, millis)
     requestAnimationFrame executeAnimationFrame
 
   handleGpx = (gpx) ->
     addPoint = ->
       trkpt = jQuery(this)
-      points.push({
+      points.push {
         latitude: trkpt.attr('lat')
         longitude: trkpt.attr('lon')
-      })
+      }
 
     jQuery(gpx).find('trkpt').each addPoint
 
@@ -40,7 +44,7 @@ window.init = ->
     cc = new CanvasContext
     cc.handleResize()
     window.onresize = cc.handleResize
-    jQuery.get 'gpx.xml', handleGpx
+    jQuery.get 'russia.xml', handleGpx
     requestAnimationFrame executeAnimationFrame
 
-addEventListener('DOMContentLoaded', init, false)
+addEventListener 'DOMContentLoaded', init, false

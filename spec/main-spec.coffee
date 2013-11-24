@@ -1,4 +1,6 @@
 describe "main", ->
+  nop = ->
+
   describe "#init", ->
     it "doesn't crash if there is no canvas", ->
       result = init()
@@ -8,13 +10,18 @@ describe "main", ->
     context = null
 
     beforeEach ->
-      nop = ->
-      context = { clear: nop, draw: nop, drawFlag: nop }
+      context = { clear: nop }
 
     it "clears screen", ->
       spyOn(context, 'clear')
       animationFrame(context, [])
       expect(context.clear).toHaveBeenCalled()
+
+  describe "#drawCompetitor", ->
+    context = null
+
+    beforeEach ->
+      context = { draw: nop, drawFlag: nop }
 
     describe "draws", ->
       points = [
@@ -28,11 +35,11 @@ describe "main", ->
         spyOn(context, 'drawFlag')
 
       it "the first point", ->
-        animationFrame(context, points, 0)
+        drawCompetitor(context, points, 0)
         expect(context.drawFlag).toHaveBeenCalledWith(1, 54)
 
       it "the second point and the first with lower alpha", ->
-        animationFrame(context, points, 1)
+        drawCompetitor(context, points, 1)
         expect(context.drawFlag).toHaveBeenCalledWith(2, 54)
         expect(context.draw).toHaveBeenCalledWith(1, 54, 0.99)
 

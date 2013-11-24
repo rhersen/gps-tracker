@@ -15,14 +15,10 @@ class window.CanvasContext
     @ctx.fill()
 
   drawFlag: (x, y) ->
-    size = 2
+    size = 8
     canvasX = getCanvasX(x, @canvas.width)
     canvasY = getCanvasY(y, @canvas.height)
-    @ctx.fillStyle = "rgb(0,82,147)"
-    @ctx.fillRect(canvasX - size * 5, canvasY - size * 5, size * 10, size * 10)
-    @ctx.fillStyle = "rgb(254,203,0)"
-    @ctx.fillRect(canvasX - size, canvasY - size * 5, size * 2, size * 10)
-    @ctx.fillRect(canvasX - size * 5, canvasY - size, size * 10, size * 2)
+    flagOfRussia @ctx, size, canvasX, canvasY
 
   clear: ->
     @ctx.clearRect(0, 0, @canvas.width, @canvas.height)
