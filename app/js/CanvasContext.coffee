@@ -11,8 +11,18 @@ class window.CanvasContext
       getCanvasY(y, @canvas.height),
       4, 0, 2 * Math.PI, false
     )
-    @ctx.fillStyle = "rgba(255,0,255,#{ alpha })"
+    @ctx.fillStyle = "rgba(0,82,147,#{ alpha })"
     @ctx.fill()
+
+  drawFlag: (x, y) ->
+    size = 2
+    canvasX = getCanvasX(x, @canvas.width)
+    canvasY = getCanvasY(y, @canvas.height)
+    @ctx.fillStyle = "rgb(0,82,147)"
+    @ctx.fillRect(canvasX - size * 5, canvasY - size * 5, size * 10, size * 10)
+    @ctx.fillStyle = "rgb(254,203,0)"
+    @ctx.fillRect(canvasX - size, canvasY - size * 5, size * 2, size * 10)
+    @ctx.fillRect(canvasX - size * 5, canvasY - size, size * 10, size * 2)
 
   clear: ->
     @ctx.clearRect(0, 0, @canvas.width, @canvas.height)

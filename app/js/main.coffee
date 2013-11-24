@@ -12,10 +12,14 @@ getIndex = (millis) ->
 draw = (cc, point, alpha)->
   cc.draw point.longitude, point.latitude, alpha
 
+drawFlag = (cc, point)->
+  cc.drawFlag point.longitude, point.latitude
+
 window.animationFrame = (cc, points, head) ->
   cc.clear()
   tail = head - 100
   draw cc, point, (i - tail) / 100 for point, i in points when tail < i <= head
+  drawFlag cc, points[head] if head < points.length
 
 window.init = ->
   executeAnimationFrame = (millis) ->
