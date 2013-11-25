@@ -9,21 +9,15 @@ competitors = [
   []
 ]
 
-getIndex = (points, millis) ->
-  Math.round(millis / 32) % points.length
-
-draw = (cc, point, alpha)->
-  cc.draw point.longitude, point.latitude, alpha
-
-drawFlag = (cc, point)->
-  cc.drawFlag point.longitude, point.latitude
-
 window.drawCompetitor = (cc, points, head) ->
+  draw = (cc, point, alpha)-> cc.draw point.longitude, point.latitude, alpha
+  drawFlag = (cc, point)-> cc.drawFlag point.longitude, point.latitude
   tail = head - 100
   draw cc, point, (i - tail) / 100 for point, i in points when tail < i < head
   drawFlag cc, points[head] if head < points.length
 
 window.animationFrame = (cc, competitors, millis) ->
+  getIndex = (points, millis) -> Math.round(millis / 32) % points.length
   cc.clear()
   drawCompetitor(cc, points, getIndex(points, millis)) for points in competitors
 

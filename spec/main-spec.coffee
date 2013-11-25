@@ -7,13 +7,12 @@ describe "main", ->
       expect(result).toBeUndefined()
 
   describe "#animationFrame", ->
-    context = null
+    context = { clear: nop }
 
     beforeEach ->
-      context = { clear: nop }
+      spyOn(context, 'clear')
 
     it "clears screen", ->
-      spyOn(context, 'clear')
       animationFrame(context, [])
       expect(context.clear).toHaveBeenCalled()
 
@@ -26,30 +25,26 @@ describe "main", ->
       expect(window.each).toHaveBeenCalledWith('', 'trkpt', jasmine.any(Function)) # fake
 
   describe "#drawCompetitor", ->
-    context = null
+    context = { draw: nop, drawFlag: nop }
+
+    points = [
+      {longitude: 1, latitude: 54},
+      {longitude: 2, latitude: 54},
+      {longitude: 3, latitude: 54}
+    ]
 
     beforeEach ->
-      context = { draw: nop, drawFlag: nop }
+      spyOn(context, 'draw')
+      spyOn(context, 'drawFlag')
 
-    describe "draws", ->
-      points = [
-        {longitude: 1, latitude: 54},
-        {longitude: 2, latitude: 54},
-        {longitude: 3, latitude: 54}
-      ]
+    it "draws the first point", ->
+      drawCompetitor(context, points, 0)
+      expect(context.drawFlag).toHaveBeenCalledWith(1, 54)
 
-      beforeEach ->
-        spyOn(context, 'draw')
-        spyOn(context, 'drawFlag')
-
-      it "the first point", ->
-        drawCompetitor(context, points, 0)
-        expect(context.drawFlag).toHaveBeenCalledWith(1, 54)
-
-      it "the second point and the first with lower alpha", ->
-        drawCompetitor(context, points, 1)
-        expect(context.drawFlag).toHaveBeenCalledWith(2, 54)
-        expect(context.draw).toHaveBeenCalledWith(1, 54, 0.99)
+    it "draws flag and point", ->
+      drawCompetitor(context, points, 1)
+      expect(context.drawFlag).toHaveBeenCalledWith(2, 54)
+      expect(context.draw).toHaveBeenCalledWith(1, 54, 0.99)
 
   describe "#getCanvasX #getCanvasY", ->
     it "maps top left", ->
