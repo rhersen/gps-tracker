@@ -5,13 +5,15 @@ window.getCanvasY = (userCoordinate, max)->
   (3637.74 - 61.451484 * userCoordinate) * max
 
 competitors = [
-  [],
-  []
+  {points: []}
+  {points: []}
 ]
 
-window.drawCompetitor = (cc, points, head) ->
+window.drawCompetitor = (cc, competitor, head) ->
   draw = (cc, point, alpha)-> cc.draw point.longitude, point.latitude, alpha
   drawFlag = (cc, point)-> cc.drawFlag point.longitude, point.latitude
+
+  points = competitor.points
   tail = head - 100
   draw cc, point, (i - tail) / 100 for point, i in points when tail < i < head
   drawFlag cc, points[head] if head < points.length
@@ -19,19 +21,15 @@ window.drawCompetitor = (cc, points, head) ->
 window.animationFrame = (cc, competitors, millis) ->
   getIndex = (points, millis) -> Math.round(millis / 32) % points.length
   cc.clear()
-  drawCompetitor(cc, points, getIndex(points, millis)) for points in competitors
+  drawCompetitor(cc, competitor, getIndex(competitor.points, millis)) for competitor in competitors
 
 window.each = (xml, element, callback) ->
   jQuery(xml).find(element).each callback
 
-window.getGpxHandler = (points) ->
+window.getGpxHandler = (competitor) ->
   (gpx) ->
     addPoint = ->
-      points.push {
-        latitude: this.attributes['lat'].value
-        longitude: this.attributes['lon'].value
-      }
-
+      competitor.points.push { latitude: this.attributes['lat'].value, longitude: this.attributes['lon'].value }
     each gpx, 'trkpt', addPoint
 
 window.init = ->

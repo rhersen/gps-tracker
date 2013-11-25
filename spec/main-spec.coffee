@@ -27,22 +27,23 @@ describe "main", ->
   describe "#drawCompetitor", ->
     context = { draw: nop, drawFlag: nop }
 
-    points = [
-      {longitude: 1, latitude: 54},
-      {longitude: 2, latitude: 54},
-      {longitude: 3, latitude: 54}
-    ]
-
+    competitor = {
+      points: [
+        {longitude: 1, latitude: 54},
+        {longitude: 2, latitude: 54},
+        {longitude: 3, latitude: 54}
+      ]
+    }
     beforeEach ->
       spyOn(context, 'draw')
       spyOn(context, 'drawFlag')
 
     it "draws the first point", ->
-      drawCompetitor(context, points, 0)
+      drawCompetitor(context, competitor, 0)
       expect(context.drawFlag).toHaveBeenCalledWith(1, 54)
 
     it "draws flag and point", ->
-      drawCompetitor(context, points, 1)
+      drawCompetitor(context, competitor, 1)
       expect(context.drawFlag).toHaveBeenCalledWith(2, 54)
       expect(context.draw).toHaveBeenCalledWith(1, 54, 0.99)
 
