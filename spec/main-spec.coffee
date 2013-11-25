@@ -17,6 +17,14 @@ describe "main", ->
       animationFrame(context, [])
       expect(context.clear).toHaveBeenCalled()
 
+  describe "#getGpxHandler", ->
+    beforeEach ->
+      spyOn(window, 'each')
+
+    it "calls each", ->
+      getGpxHandler([])('')
+      expect(window.each).toHaveBeenCalledWith('', 'trkpt', jasmine.any(Function)) # fake
+
   describe "#drawCompetitor", ->
     context = null
 
