@@ -1,14 +1,24 @@
 describe "main", ->
   nop = ->
 
+  competitor = {
+    name: 'monaco',
+    color: {red: 213, green: 43, blue: 30},
+    points: [
+      {longitude: 1, latitude: 54},
+      {longitude: 2, latitude: 54},
+      {longitude: 3, latitude: 54}
+    ]
+  }
+
+  context = { clear: nop, draw: nop, drawFlag: nop }
+
   describe "#init", ->
     it "doesn't crash if there is no canvas", ->
       result = init()
       (expect result).toBeUndefined()
 
   describe "#animationFrame", ->
-    context = { clear: nop }
-
     beforeEach ->
       spyOn context, 'clear'
 
@@ -24,29 +34,26 @@ describe "main", ->
         (getGpxHandler {points: []}) ''
         (expect window.each).toHaveBeenCalledWith('', 'trkpt', (jasmine.any Function))
 
-  describe "#drawCompetitor", ->
-    context = { draw: nop, drawFlag: nop }
-
-    competitor = {
-      name: 'monaco',
-      color: {red: 213, green: 43, blue: 30},
-      points: [
-        {longitude: 1, latitude: 54},
-        {longitude: 2, latitude: 54},
-        {longitude: 3, latitude: 54}
-      ]
-    }
+  describe "#drawHead", ->
     beforeEach ->
       spyOn context, 'draw'
       spyOn context, 'drawFlag'
 
     it "draws the first point", ->
-      drawCompetitor context, competitor, 0
+      drawHead context, competitor, 0
       (expect context.drawFlag).toHaveBeenCalledWith 'monaco', 1, 54
 
     it "draws flag and point", ->
-      drawCompetitor context, competitor, 1
+      drawHead context, competitor, 1
       (expect context.drawFlag).toHaveBeenCalledWith 'monaco', 2, 54
+
+  describe "#drawTail", ->
+    beforeEach ->
+      spyOn context, 'draw'
+      spyOn context, 'drawFlag'
+
+    it "draws flag and point", ->
+      drawTail context, competitor, 1
       (expect context.draw).toHaveBeenCalledWith 1, 54, 213, 43, 30, 0.99
 
   describe "#getCanvasX #getCanvasY", ->

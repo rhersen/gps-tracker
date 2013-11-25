@@ -9,19 +9,24 @@ competitors = [
   {name: 'russia', color: {red: 213, green: 43, blue: 30}, points: []}
 ]
 
-window.drawCompetitor = (cc, competitor, head) ->
-  draw = (point, alpha) -> cc.draw point.longitude, point.latitude, competitor.color.red, competitor.color.green, competitor.color.blue, alpha
+window.drawHead = (cc, competitor, head) ->
   drawFlag = (point) -> cc.drawFlag competitor.name, point.longitude, point.latitude
+
+  points = competitor.points
+  drawFlag points[head] if head < points.length
+
+window.drawTail = (cc, competitor, head) ->
+  draw = (point, alpha) -> cc.draw point.longitude, point.latitude, competitor.color.red, competitor.color.green, competitor.color.blue, alpha
 
   points = competitor.points
   tail = head - 100
   draw point, (i - tail) / 100 for point, i in points when tail < i < head
-  drawFlag points[head] if head < points.length
 
 window.animationFrame = (cc, competitors, millis) ->
   getIndex = (points, millis) -> (Math.round millis / 32) % points.length
   cc.clear()
-  drawCompetitor cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
+  drawTail cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
+  drawHead cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
 
 window.each = (xml, element, callback) ->
   ((jQuery xml).find element).each callback
