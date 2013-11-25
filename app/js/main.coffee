@@ -10,8 +10,8 @@ competitors = [
 ]
 
 window.drawCompetitor = (cc, competitor, head) ->
-  draw = (cc, point, alpha)-> cc.draw point.longitude, point.latitude, alpha
-  drawFlag = (cc, point)-> cc.drawFlag point.longitude, point.latitude
+  draw = (cc, point, alpha) -> cc.draw point.longitude, point.latitude, alpha
+  drawFlag = (cc, point) -> cc.drawFlag point.longitude, point.latitude
 
   points = competitor.points
   tail = head - 100
@@ -19,12 +19,12 @@ window.drawCompetitor = (cc, competitor, head) ->
   drawFlag cc, points[head] if head < points.length
 
 window.animationFrame = (cc, competitors, millis) ->
-  getIndex = (points, millis) -> Math.round(millis / 32) % points.length
+  getIndex = (points, millis) -> (Math.round millis / 32) % points.length
   cc.clear()
-  drawCompetitor(cc, competitor, getIndex(competitor.points, millis)) for competitor in competitors
+  drawCompetitor cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
 
 window.each = (xml, element, callback) ->
-  jQuery(xml).find(element).each callback
+  ((jQuery xml).find element).each callback
 
 window.getGpxHandler = (competitor) ->
   (gpx) ->
@@ -34,15 +34,15 @@ window.getGpxHandler = (competitor) ->
 
 window.init = ->
   executeAnimationFrame = (millis) ->
-    animationFrame(cc, competitors, millis)
+    animationFrame cc, competitors, millis
     requestAnimationFrame executeAnimationFrame
 
   if document.getElementById 'fg'
     cc = new CanvasContext
     cc.handleResize()
     window.onresize = cc.handleResize
-    jQuery.get 'russia.xml', getGpxHandler(competitors[0])
-    jQuery.get 'sweden.xml', getGpxHandler(competitors[1])
+    jQuery.get 'russia.xml', getGpxHandler competitors[0]
+    jQuery.get 'sweden.xml', getGpxHandler competitors[1]
     requestAnimationFrame executeAnimationFrame
 
 addEventListener 'DOMContentLoaded', init, false
