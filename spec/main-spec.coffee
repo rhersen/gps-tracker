@@ -22,12 +22,14 @@ describe "main", ->
 
       it "calls each", ->
         (getGpxHandler {points: []}) ''
-        (expect window.each).toHaveBeenCalledWith('', 'trkpt', (jasmine.any Function)) # fake
+        (expect window.each).toHaveBeenCalledWith('', 'trkpt', (jasmine.any Function))
 
   describe "#drawCompetitor", ->
     context = { draw: nop, drawFlag: nop }
 
     competitor = {
+      name: 'monaco',
+      color: {red: 213, green: 43, blue: 30},
       points: [
         {longitude: 1, latitude: 54},
         {longitude: 2, latitude: 54},
@@ -40,12 +42,12 @@ describe "main", ->
 
     it "draws the first point", ->
       drawCompetitor context, competitor, 0
-      (expect context.drawFlag).toHaveBeenCalledWith 1, 54
+      (expect context.drawFlag).toHaveBeenCalledWith 'monaco', 1, 54
 
     it "draws flag and point", ->
       drawCompetitor context, competitor, 1
-      (expect context.drawFlag).toHaveBeenCalledWith 2, 54
-      (expect context.draw).toHaveBeenCalledWith 1, 54, 0.99
+      (expect context.drawFlag).toHaveBeenCalledWith 'monaco', 2, 54
+      (expect context.draw).toHaveBeenCalledWith 1, 54, 213, 43, 30, 0.99
 
   describe "#getCanvasX #getCanvasY", ->
     it "maps top left", ->

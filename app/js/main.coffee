@@ -5,18 +5,18 @@ window.getCanvasY = (userCoordinate, max)->
   (3637.74 - 61.451484 * userCoordinate) * max
 
 competitors = [
-  {points: []}
-  {points: []}
+  {name: 'sweden', color: {red: 0, green: 82, blue: 147}, points: []}
+  {name: 'russia', color: {red: 213, green: 43, blue: 30}, points: []}
 ]
 
 window.drawCompetitor = (cc, competitor, head) ->
-  draw = (cc, point, alpha) -> cc.draw point.longitude, point.latitude, alpha
-  drawFlag = (cc, point) -> cc.drawFlag point.longitude, point.latitude
+  draw = (point, alpha) -> cc.draw point.longitude, point.latitude, competitor.color.red, competitor.color.green, competitor.color.blue, alpha
+  drawFlag = (point) -> cc.drawFlag competitor.name, point.longitude, point.latitude
 
   points = competitor.points
   tail = head - 100
-  draw cc, point, (i - tail) / 100 for point, i in points when tail < i < head
-  drawFlag cc, points[head] if head < points.length
+  draw point, (i - tail) / 100 for point, i in points when tail < i < head
+  drawFlag points[head] if head < points.length
 
 window.animationFrame = (cc, competitors, millis) ->
   getIndex = (points, millis) -> (Math.round millis / 32) % points.length
@@ -26,10 +26,10 @@ window.animationFrame = (cc, competitors, millis) ->
 window.each = (xml, element, callback) ->
   ((jQuery xml).find element).each callback
 
-window.getGpxHandler = (competitor) ->
+window.getGpxHandler = (points) ->
   (gpx) ->
     addPoint = ->
-      competitor.points.push { latitude: this.attributes['lat'].value, longitude: this.attributes['lon'].value }
+      points.push { latitude: this.attributes['lat'].value, longitude: this.attributes['lon'].value }
     each gpx, 'trkpt', addPoint
 
 window.init = ->
@@ -41,8 +41,8 @@ window.init = ->
     cc = new CanvasContext
     cc.handleResize()
     window.onresize = cc.handleResize
-    jQuery.get 'russia.xml', getGpxHandler competitors[0]
-    jQuery.get 'sweden.xml', getGpxHandler competitors[1]
+    jQuery.get competitors[0].name + '.xml', getGpxHandler competitors[0].points
+    jQuery.get competitors[1].name + '.xml', getGpxHandler competitors[1].points
     requestAnimationFrame executeAnimationFrame
 
 addEventListener 'DOMContentLoaded', init, false

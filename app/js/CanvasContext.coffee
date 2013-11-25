@@ -3,16 +3,16 @@ class window.CanvasContext
     @canvas = document.getElementById 'fg'
     @ctx = @canvas.getContext '2d'
 
-  draw: (x, y, alpha) ->
+  draw: (x, y, r, g, b, alpha) ->
     alpha = alpha || 1.0
     @ctx.beginPath()
     @ctx.arc (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height), 4, 0, 2 * Math.PI, false
-    @ctx.fillStyle = "rgba(0,82,147,#{ alpha })"
+    @ctx.fillStyle = "rgba(#{ r },#{ g },#{ b },#{ alpha })"
     @ctx.fill()
 
-  drawFlag: (x, y) ->
+  drawFlag: (name, x, y) ->
     size = 8
-    flagOfRussia @ctx, size, (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height)
+    getFlag(name)(@ctx, size, (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height))
 
   clear: ->
     @ctx.clearRect 0, 0, @canvas.width, @canvas.height
