@@ -7,6 +7,7 @@ window.getCanvasY = (userCoordinate, max)->
 competitors = [
   {name: 'sweden', color: {red: 0, green: 82, blue: 147}, points: []}
   {name: 'russia', color: {red: 213, green: 43, blue: 30}, points: []}
+  {name: 'italy', color: {red: 0, green: 146, blue: 70}, points: []}
 ]
 
 window.drawHead = (cc, competitor, head) ->
@@ -23,7 +24,7 @@ window.drawTail = (cc, competitor, head) ->
   draw point, (i - tail) / 100 for point, i in points when tail < i < head
 
 window.animationFrame = (cc, competitors, millis) ->
-  getIndex = (points, millis) -> (Math.round millis / 32) % points.length
+  getIndex = (points, millis) -> (Math.round millis / 50) % points.length
   cc.clear()
   drawTail cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
   drawHead cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
@@ -46,8 +47,7 @@ window.init = ->
     cc = new CanvasContext
     cc.handleResize()
     window.onresize = cc.handleResize
-    jQuery.get competitors[0].name + '.xml', getGpxHandler competitors[0].points
-    jQuery.get competitors[1].name + '.xml', getGpxHandler competitors[1].points
+    jQuery.get competitor.name + '.xml', getGpxHandler competitor.points for competitor in competitors
     requestAnimationFrame executeAnimationFrame
 
 addEventListener 'DOMContentLoaded', init, false
