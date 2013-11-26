@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class="fullscreen">
-      <img id="bg" src="http://www.tullingesk.se/nyhet/uppladdat/upload/2677/4025342915196.jpg">
+      <img id="bg" src="img/cropped.png">
       <canvas id="fg"></canvas>
     </div>
     <script type="text/javascript" src="js/app.js"></script>
