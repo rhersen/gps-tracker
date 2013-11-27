@@ -8,6 +8,11 @@ competitors = [
   {name: 'sweden', color: {red: 0, green: 82, blue: 147}, points: []}
   {name: 'russia', color: {red: 213, green: 43, blue: 30}, points: []}
   {name: 'italy', color: {red: 0, green: 146, blue: 70}, points: []}
+  {name: 'finland', color: {red: 0, green: 0, blue: 255}, points: []}
+  {name: 'france', color: {red: 255, green: 0, blue: 255}, points: []}
+  {name: 'norway', color: {red: 128, green: 0, blue: 255}, points: []}
+  {name: 'switzerland', color: {red: 255, green: 0, blue: 0}, points: []}
+  {name: 'usa', color: {red: 255, green: 128, blue: 128}, points: []}
 ]
 
 window.drawHead = (cc, competitor, head) ->

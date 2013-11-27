@@ -1,30 +1,67 @@
-flagOfSweden = (ctx, size, canvasX, canvasY) ->
-  ctx.fillStyle = "rgb(0,82,147)"
-  ctx.fillRect canvasX - size, canvasY - size, size * 2, size * 2
-  ctx.fillStyle = "rgb(254,203,0)"
-  ctx.fillRect canvasX - size * 0.2, canvasY - size, size * 0.4, size * 2
-  ctx.fillRect canvasX - size, canvasY - size * 0.2, size * 2, size * 0.4
+window.flags =
+  russia:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "white"
+      ctx.fillRect x - size, y - size, size * 2, size
+      ctx.fillStyle = "rgb(213,43,30)"
+      ctx.fillRect x - size, y, size * 2, size
+      ctx.fillStyle = "rgb(0,57,166)"
+      ctx.fillRect x - size, y - size / 3, size * 2, size * 2 / 3
 
-flagOfRussia = (ctx, size, canvasX, canvasY) ->
-  ctx.fillStyle = "white"
-  ctx.fillRect canvasX - size, canvasY - size, size * 2, size
-  ctx.fillStyle = "rgb(213,43,30)"
-  ctx.fillRect canvasX - size, canvasY, size * 2, size
-  ctx.fillStyle = "rgb(0,57,166)"
-  ctx.fillRect canvasX - size, canvasY - size / 3, size * 2, size * 2 / 3
+  sweden:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "rgb(0,82,147)"
+      ctx.fillRect x - size, y - size, size * 2, size * 2
+      ctx.fillStyle = "rgb(254,203,0)"
+      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
+      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
 
-flagOfItaly = (ctx, size, canvasX, canvasY) ->
-  ctx.fillStyle = "rgb(0,146,70)"
-  ctx.fillRect canvasX - size, canvasY - size, size, size * 2
-  ctx.fillStyle = "rgb(206,43,55)"
-  ctx.fillRect canvasX, canvasY - size, size, size * 2
-  ctx.fillStyle = "white"
-  ctx.fillRect canvasX - size / 3, canvasY - size, size * 2 / 3, size * 2
+  italy:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "rgb(0,146,70)"
+      ctx.fillRect x - size, y - size, size, size * 2
+      ctx.fillStyle = "rgb(206,43,55)"
+      ctx.fillRect x, y - size, size, size * 2
+      ctx.fillStyle = "white"
+      ctx.fillRect x - size / 3, y - size, size * 2 / 3, size * 2
 
-window.getFlag = (name) ->
-  if name is 'russia'
-    flagOfRussia
-  else if name is 'sweden'
-    flagOfSweden
-  else if name is 'italy'
-    flagOfItaly
+  finland:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "white"
+      ctx.fillRect x - size, y - size, size * 2, size * 2
+      ctx.fillStyle = "rgb(0,82,147)"
+      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
+      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+
+  france:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "rgb(0,0,255)"
+      ctx.fillRect x - size, y - size, size, size * 2
+      ctx.fillStyle = "rgb(206,43,55)"
+      ctx.fillRect x, y - size, size, size * 2
+      ctx.fillStyle = "white"
+      ctx.fillRect x - size / 3, y - size, size * 2 / 3, size * 2
+
+  norway:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "red"
+      ctx.fillRect x - size, y - size, size * 2, size * 2
+      ctx.fillStyle = "rgb(0,82,147)"
+      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
+      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+
+  switzerland:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "red"
+      ctx.fillRect x - size, y - size, size * 2, size * 2
+      ctx.fillStyle = "white"
+      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
+      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+
+  usa:
+    (ctx, size, x, y) ->
+      ctx.fillStyle = "red"
+      ctx.fillRect x - size, y - size, size * 2, size * 2
+      ctx.fillStyle = "white"
+      ctx.fillRect x - size, y - size * 0.6, size * 2, size * 0.4
+      ctx.fillRect x - size, y + size * 0.2, size * 2, size * 0.4

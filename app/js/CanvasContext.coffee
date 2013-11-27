@@ -12,7 +12,7 @@ class window.CanvasContext
 
   drawFlag: (name, x, y) ->
     size = 8
-    getFlag(name)(@ctx, size, (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height))
+    flags[name](@ctx, size, (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height))
 
   clear: ->
     @ctx.clearRect 0, 0, @canvas.width, @canvas.height
