@@ -1,8 +1,13 @@
+kx = 20.3707476
+mx = -363.878019848
+my = 3637.74
+ky = -61.451484
+
 window.getCanvasX = (userCoordinate, max)->
-  (-363.878019848 + 20.3707476 * userCoordinate) * max
+  (kx * userCoordinate + mx) * max
 
 window.getCanvasY = (userCoordinate, max)->
-  (3637.74 - 61.451484 * userCoordinate) * max
+  (ky * userCoordinate + my) * max
 
 competitors = [
   {name: 'sweden', color: {red: 0, green: 82, blue: 147}, points: []}
@@ -43,6 +48,15 @@ window.getGpxHandler = (points) ->
       points.push { latitude: this.attributes['lat'].value, longitude: this.attributes['lon'].value }
     each gpx, 'trkpt', addPoint
 
+recorded = []
+
+quote = (s) ->
+  '"' + s + '"'
+
+window.getGpx = (points) ->
+  trkpts = ("&lt;trkpt lat=#{ (quote point.lat) } lon=#{ (quote point.lon) }>&lt;/trkpt>" for point in points)
+  return ["&lt;trk>", (trkpts.join '\n'), "&lt;/trk>"].join '\n'
+
 window.init = ->
   executeAnimationFrame = (millis) ->
     animationFrame cc, competitors, millis
@@ -53,6 +67,13 @@ window.init = ->
     cc.handleResize()
     window.onresize = cc.handleResize
     jQuery.get competitor.name + '.xml', getGpxHandler competitor.points for competitor in competitors
+#    (jQuery '#fg').mousemove((e)->
+#      recorded.push({lon: (e.pageX / @width - mx) / kx, lat: (e.pageY / @height - my) / ky})
+#    ).click(->
+#      jQuery(@).after(jQuery('<pre>' + getGpx(recorded) + '</pre>'))
+#      jQuery(@).hide()
+#      jQuery('#bg').hide()
+#    )
     requestAnimationFrame executeAnimationFrame
 
 addEventListener 'DOMContentLoaded', init, false

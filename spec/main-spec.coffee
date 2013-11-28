@@ -64,3 +64,7 @@ describe "main", ->
     it "maps bottom right", ->
       (expect getCanvasX 17.911862, 1000).toBeCloseTo 1000, 0
       (expect getCanvasY 59.180671, 1000).toBeCloseTo 1000, 0
+
+  describe "#getGpx", ->
+    it "gets gpx data for supplied points", ->
+      (expect getGpx [ {lat: 59.180671, lon: 17.911862}, {lat: 59.196944, lon: 17.862772} ]).toBe '&lt;trk>\n&lt;trkpt lat="59.180671" lon="17.911862">&lt;/trkpt>\n&lt;trkpt lat="59.196944" lon="17.862772">&lt;/trkpt>\n&lt;/trk>'
