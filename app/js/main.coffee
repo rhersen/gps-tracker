@@ -34,7 +34,9 @@ window.drawTail = (cc, competitor, head) ->
   draw point, (i - tail) / 100 for point, i in points when tail < i < head
 
 window.animationFrame = (cc, competitors, millis) ->
-  getIndex = (points, millis) -> (Math.round millis / 50) % points.length
+  getIndex = (points, millis) ->
+    i = (Math.round millis / 100)
+    if points.length == 0 then 0 else if i < points.length then i else points.length - 1
   cc.clear()
   drawTail cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
   drawHead cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
