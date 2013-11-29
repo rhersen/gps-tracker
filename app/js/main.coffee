@@ -1,7 +1,7 @@
 kx = 20.3707476
 mx = -363.878019848
-my = 3637.74
 ky = -61.451484
+my = 3637.74
 
 window.getCanvasX = (userCoordinate, max)->
   (kx * userCoordinate + mx) * max
@@ -48,8 +48,6 @@ window.getGpxHandler = (points) ->
       points.push { latitude: this.attributes['lat'].value, longitude: this.attributes['lon'].value }
     each gpx, 'trkpt', addPoint
 
-recorded = []
-
 quote = (s) ->
   '"' + s + '"'
 
@@ -67,13 +65,7 @@ window.init = ->
     cc.handleResize()
     window.onresize = cc.handleResize
     jQuery.get competitor.name + '.xml', getGpxHandler competitor.points for competitor in competitors
-    (jQuery '#fg').mousemove((e)->
-      recorded.push({lon: (e.pageX / @width - mx) / kx, lat: (e.pageY / @height - my) / ky})
-    ).click(->
-      jQuery(@).after(jQuery('<pre>' + getGpx(recorded) + '</pre>'))
-      jQuery(@).hide()
-      jQuery('#bg').hide()
-    )
+    enableRecording kx, mx, ky, my
     requestAnimationFrame executeAnimationFrame
 
 addEventListener 'DOMContentLoaded', init, false
