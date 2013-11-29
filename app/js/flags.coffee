@@ -1,8 +1,16 @@
+cross = (width, color, ctx, size, x, y) ->
+  ctx.fillStyle = color
+  ctx.fillRect x - size * width, y - size, size * 2 * width, size * 2
+  ctx.fillRect x - size, y - size * width, size * 2, size * 2 * width
+
+bg = (color, ctx, size, x, y) ->
+  ctx.fillStyle = color
+  ctx.fillRect x - size, y - size, size * 2, size * 2
+
 window.flags =
   russia:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "white"
-      ctx.fillRect x - size, y - size, size * 2, size
+      bg "white", ctx, size, x, y
       ctx.fillStyle = "rgb(213,43,30)"
       ctx.fillRect x - size, y, size * 2, size
       ctx.fillStyle = "rgb(0,57,166)"
@@ -10,16 +18,12 @@ window.flags =
 
   sweden:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "rgb(0,82,147)"
-      ctx.fillRect x - size, y - size, size * 2, size * 2
-      ctx.fillStyle = "rgb(254,203,0)"
-      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
-      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+      bg "rgb(0,82,147)", ctx, size, x, y
+      cross 0.2, "rgb(254,203,0)", ctx, size, x, y
 
   italy:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "rgb(0,146,70)"
-      ctx.fillRect x - size, y - size, size, size * 2
+      bg "rgb(0,146,70)", ctx, size, x, y
       ctx.fillStyle = "rgb(206,43,55)"
       ctx.fillRect x, y - size, size, size * 2
       ctx.fillStyle = "white"
@@ -27,16 +31,12 @@ window.flags =
 
   finland:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "white"
-      ctx.fillRect x - size, y - size, size * 2, size * 2
-      ctx.fillStyle = "rgb(0,82,147)"
-      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
-      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+      bg "white", ctx, size, x, y
+      cross 0.2, "rgb(0,82,147)", ctx, size, x, y
 
   france:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "rgb(0,0,255)"
-      ctx.fillRect x - size, y - size, size, size * 2
+      bg "rgb(0,35,149)", ctx, size, x, y
       ctx.fillStyle = "rgb(206,43,55)"
       ctx.fillRect x, y - size, size, size * 2
       ctx.fillStyle = "white"
@@ -44,24 +44,22 @@ window.flags =
 
   norway:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "red"
-      ctx.fillRect x - size, y - size, size * 2, size * 2
-      ctx.fillStyle = "rgb(0,82,147)"
-      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
-      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+      bg "rgb(239,43,45)", ctx, size, x, y
+      cross 1 / 4, "white", ctx, size, x, y
+      cross 1 / 8, "rgb(0,40,104)", ctx, size, x, y
 
   switzerland:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "red"
-      ctx.fillRect x - size, y - size, size * 2, size * 2
+      bg "rgb(213,43,30)", ctx, size, x, y
       ctx.fillStyle = "white"
-      ctx.fillRect x - size * 0.2, y - size, size * 0.4, size * 2
-      ctx.fillRect x - size, y - size * 0.2, size * 2, size * 0.4
+      ctx.fillRect x - size * 0.2, y - size * 0.8, size * 0.4, size * 1.6
+      ctx.fillRect x - size * 0.8, y - size * 0.2, size * 1.6, size * 0.4
 
   usa:
     (ctx, size, x, y) ->
-      ctx.fillStyle = "red"
-      ctx.fillRect x - size, y - size, size * 2, size * 2
+      bg "rgb(178,34,52)", ctx, size, x, y
       ctx.fillStyle = "white"
       ctx.fillRect x - size, y - size * 0.6, size * 2, size * 0.4
       ctx.fillRect x - size, y + size * 0.2, size * 2, size * 0.4
+      ctx.fillStyle = "rgb(60,59,110)"
+      ctx.fillRect x - size, y - size, size, size

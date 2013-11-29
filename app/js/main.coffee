@@ -16,7 +16,7 @@ competitors = [
   {name: 'finland', color: {red: 0, green: 0, blue: 255}, points: []}
   {name: 'france', color: {red: 255, green: 0, blue: 255}, points: []}
   {name: 'norway', color: {red: 128, green: 0, blue: 255}, points: []}
-  {name: 'switzerland', color: {red: 255, green: 0, blue: 0}, points: []}
+  {name: 'switzerland', color: {red: 213, green: 43, blue: 30}, points: []}
   {name: 'usa', color: {red: 255, green: 128, blue: 128}, points: []}
 ]
 
@@ -67,13 +67,13 @@ window.init = ->
     cc.handleResize()
     window.onresize = cc.handleResize
     jQuery.get competitor.name + '.xml', getGpxHandler competitor.points for competitor in competitors
-#    (jQuery '#fg').mousemove((e)->
-#      recorded.push({lon: (e.pageX / @width - mx) / kx, lat: (e.pageY / @height - my) / ky})
-#    ).click(->
-#      jQuery(@).after(jQuery('<pre>' + getGpx(recorded) + '</pre>'))
-#      jQuery(@).hide()
-#      jQuery('#bg').hide()
-#    )
+    (jQuery '#fg').mousemove((e)->
+      recorded.push({lon: (e.pageX / @width - mx) / kx, lat: (e.pageY / @height - my) / ky})
+    ).click(->
+      jQuery(@).after(jQuery('<pre>' + getGpx(recorded) + '</pre>'))
+      jQuery(@).hide()
+      jQuery('#bg').hide()
+    )
     requestAnimationFrame executeAnimationFrame
 
 addEventListener 'DOMContentLoaded', init, false
