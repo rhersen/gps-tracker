@@ -2,6 +2,10 @@ kx = 20.3707476
 mx = -363.878019848
 ky = -61.451484
 my = 3637.74
+anim = null
+delay = 100
+currentFrame = 0
+timeToNextFrame = delay
 
 window.getCanvasX = (userCoordinate, max)->
   (kx * userCoordinate + mx) * max
@@ -34,9 +38,12 @@ window.drawTail = (cc, competitor, head) ->
   draw point, (i - tail) / 100 for point, i in points when tail < i < head
 
 window.animationFrame = (cc, competitors, millis) ->
-  getIndex = (points, millis) ->
-    i = (Math.round millis / 100)
-    if points.length == 0 then 0 else if i < points.length then i else points.length - 1
+  getIndex = (points) ->
+    timeToNextFrame -= 1
+    if timeToNextFrame <= 0
+      currentFrame += 1
+      timeToNextFrame = delay
+    if points.length == 0 then 0 else if currentFrame < points.length then currentFrame else points.length - 1
   cc.clear()
   drawTail cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
   drawHead cc, competitor, (getIndex competitor.points, millis) for competitor in competitors
@@ -60,7 +67,7 @@ window.getGpx = (points) ->
 window.init = ->
   executeAnimationFrame = (millis) ->
     animationFrame cc, competitors, millis
-    requestAnimationFrame executeAnimationFrame
+    anim = requestAnimationFrame executeAnimationFrame
 
   if document.getElementById 'fg'
     cc = new CanvasContext
@@ -68,6 +75,17 @@ window.init = ->
     window.onresize = cc.handleResize
     jQuery.get competitor.name + '.xml', getGpxHandler competitor.points for competitor in competitors
     enableRecording kx, mx, ky, my
-    requestAnimationFrame executeAnimationFrame
+    anim = requestAnimationFrame executeAnimationFrame
+    (jQuery 'body').keydown (e) ->
+      if e.keyCode == 32
+        if anim
+          cancelAnimationFrame(anim)
+          anim = null
+        else
+          anim = requestAnimationFrame executeAnimationFrame
+      else if e.keyCode == 38
+        delay *= 0.9
+      else if e.keyCode == 40
+        delay *= 1.1
 
 addEventListener 'DOMContentLoaded', init, false
