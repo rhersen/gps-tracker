@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class="fullscreen">
-      <img id="bg" src="img/cropped.png">
+      <img id="bg" src="img/cropped.jpg">
       <canvas id="fg"></canvas>
     </div>
     <script type="text/javascript" src="js/app.js"></script>
