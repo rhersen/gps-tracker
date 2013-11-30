@@ -15,7 +15,7 @@ class window.CanvasContext
     @ctx.fillRect x - size, y - size, size * 2, size * 2
 
   drawFlag: (name, x, y) ->
-    size = 8
+    size = 12
     @shadow(size + 1, (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height))
     flags[name](@ctx, size, (getCanvasX x, @canvas.width), (getCanvasY y, @canvas.height))
 

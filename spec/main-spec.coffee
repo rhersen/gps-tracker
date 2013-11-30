@@ -54,7 +54,7 @@ describe "main", ->
 
     it "draws flag and point", ->
       drawTail context, competitor, 1
-      (expect context.draw).toHaveBeenCalledWith 1, 54, 213, 43, 30, 0.99
+      (expect context.draw).toHaveBeenCalledWith 1, 54, 213, 43, 30, 0.2475
 
   describe "#getCanvasX #getCanvasY", ->
     it "maps top left", ->

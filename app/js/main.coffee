@@ -14,14 +14,15 @@ window.getCanvasY = (userCoordinate, max)->
   (ky * userCoordinate + my) * max
 
 competitors = [
-  {name: 'sweden', color: {red: 0, green: 82, blue: 147}, points: []}
-  {name: 'russia', color: {red: 213, green: 43, blue: 30}, points: []}
-  {name: 'italy', color: {red: 0, green: 146, blue: 70}, points: []}
-  {name: 'finland', color: {red: 0, green: 0, blue: 255}, points: []}
-  {name: 'france', color: {red: 255, green: 0, blue: 255}, points: []}
-  {name: 'norway', color: {red: 128, green: 0, blue: 255}, points: []}
+  {name: 'finland', color: {red: 0, green: 82, blue: 147}, points: []}
+  {name: 'germany', color: {red: 0, green: 0, blue: 0}, points: []}
+  {name: 'sweden', color: {red: 254, green: 203, blue: 0}, points: []}
+  {name: 'france', color: {red: 0, green: 35, blue: 149}, points: []}
   {name: 'switzerland', color: {red: 213, green: 43, blue: 30}, points: []}
-  {name: 'usa', color: {red: 255, green: 128, blue: 128}, points: []}
+  {name: 'usa', color: {red: 60, green: 59, blue: 110}, points: []}
+  {name: 'italy', color: {red: 0, green: 146, blue: 70}, points: []}
+  {name: 'russia', color: {red: 213, green: 43, blue: 30}, points: []}
+  {name: 'norway', color: {red: 239, green: 43, blue: 45}, points: []}
 ]
 
 window.drawHead = (cc, competitor, head) ->
@@ -35,7 +36,7 @@ window.drawTail = (cc, competitor, head) ->
 
   points = competitor.points
   tail = head - 100
-  draw point, (i - tail) / 100 for point, i in points when tail < i < head
+  draw point, (i - tail) / 400 for point, i in points when tail < i < head
 
 window.animationFrame = (cc, competitors, millis) ->
   getIndex = (points) ->

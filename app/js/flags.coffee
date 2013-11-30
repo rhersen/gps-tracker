@@ -16,6 +16,14 @@ window.flags =
       ctx.fillStyle = "rgb(0,57,166)"
       ctx.fillRect x - size, y - size / 3, size * 2, size * 2 / 3
 
+  germany:
+    (ctx, size, x, y) ->
+      bg "black", ctx, size, x, y
+      ctx.fillStyle = "rgb(255,204,0)"
+      ctx.fillRect x - size, y, size * 2, size
+      ctx.fillStyle = "red"
+      ctx.fillRect x - size, y - size / 3, size * 2, size * 2 / 3
+
   sweden:
     (ctx, size, x, y) ->
       bg "rgb(0,82,147)", ctx, size, x, y
